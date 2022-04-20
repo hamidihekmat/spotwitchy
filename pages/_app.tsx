@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Spotwitchy by Karmic</title>
         <meta
           name="description"
-          content="Blazingly fast and slick Spotify Widget for streamers - Twitch and Youtube. Show case your current song to your stream."
+          content="Blazingly fast and slick Spotify Widget for streamers - Twitch and Youtube. Showcase your current playing song in your stream."
         />
       </Head>
       <Component {...pageProps} />
