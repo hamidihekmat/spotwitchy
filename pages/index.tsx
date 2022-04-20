@@ -73,7 +73,14 @@ const Home: NextPage<
           Welcome To Spotwitchy!
         </Text>
         <Spacer y={0.5} />
-        <Text h4>Slick and customizable spotify widget for OBS</Text>
+        <Text
+          h4
+          css={{
+            color: 'Gainsboro',
+          }}
+        >
+          Slick and customizable spotify widget for OBS
+        </Text>
         <Spacer y={1} />
         <Image
           css={{
@@ -191,9 +198,8 @@ const Home: NextPage<
             </Text>
             <Spacer y={1} />
             <NextLink href={{ pathname: '/activate' }} passHref>
-              <Link>
+              <Link icon css={{ gap: '0.5rem' }}>
                 <Text
-                  blockquote
                   weight="bold"
                   css={{ textGradient: '45deg, $blue500 -20%, $pink500 50%' }}
                 >
