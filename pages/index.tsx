@@ -72,6 +72,22 @@ const Home: NextPage<
         >
           Welcome To Spotwitchy!
         </Text>
+        <Spacer y={0.5} />
+        <Text h4>Slick and customizable spotify widget for OBS</Text>
+        <Spacer y={1} />
+        <Image
+          css={{
+            transform: 'scale(1.1)',
+            userSelect: 'none',
+          }}
+          autoResize
+          showSkeleton
+          loading="lazy"
+          maxDelay={1000}
+          src="demo.png"
+          alt="Sexy Widget"
+          objectFit="cover"
+        />
         <Spacer y={2} />
         <Text h3>One Time Activation</Text>
         <Spacer y={0.5} />
