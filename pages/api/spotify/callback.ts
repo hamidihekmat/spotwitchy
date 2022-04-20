@@ -52,7 +52,11 @@ const handler: NextApiHandler = async (req, res) => {
 
         const { email } = await profile.json();
 
-        await redis.set(email, response);
+        await redis.set(email, {
+          response,
+          cient_id: credentials.clientId,
+          client_secret: credentials.clientSecret,
+        });
         await redis.del(stateFromCookie || stateFromQuery);
 
         nookies.set({ res }, TOKEN_COOKIE_NAME, response.refresh_token, {
