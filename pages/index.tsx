@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import NextLink from 'next/link';
 import {
   Container,
@@ -17,11 +17,25 @@ import useCopy from 'use-copy';
 
 import { SPOTIFY_DEVELOPER_DASHBOARD } from '../constant';
 
-const Home: NextPage = () => {
-  const [copied, copy, setCopied] = useCopy(
-    process.env.SPOTIFY_REDIRECT_URI ??
-      'http://localhost:3000/api/spotify/callback'
-  );
+type GetStaticResult = {
+  redirectUri: string;
+};
+
+export const getStaticSideProps: GetStaticProps<GetStaticResult> = async () => {
+  const redirectUri =
+    process.env.SPOTIFY_REDIRECT_URI ||
+    'http://localhost:3000/api/spotify/callback';
+  return {
+    props: {
+      redirectUri,
+    },
+  };
+};
+
+const Home: NextPage<InferGetStaticPropsType<typeof getStaticSideProps>> = ({
+  redirectUri,
+}) => {
+  const [copied, copy, setCopied] = useCopy(redirectUri);
 
   const copyText = () => {
     copy();
@@ -113,8 +127,7 @@ const Home: NextPage = () => {
                 css={{ display: 'flex', justifyContent: 'space-between' }}
                 blockquote
               >
-                {process.env.SPOTIFY_REDIRECT_URI ??
-                  'http://localhost:3000/api/spotify/callback'}
+                {redirectUri}
                 <span>
                   <Tooltip
                     css={{ transform: 'translate(-2rem, -6.5rem)' }}
