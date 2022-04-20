@@ -50,7 +50,13 @@ const Home: NextPage = () => {
     <Container
       css={{ display: 'grid', placeItems: 'center', marginTop: '5rem' }}
     >
-      <Text h2 css={{ textGradient: '45deg, $blue500 -20%, $pink500 50%' }}>
+      <Text
+        h2
+        css={{
+          textGradient: '45deg, $blue500 -20%, $pink500 50%',
+          textAlign: 'center',
+        }}
+      >
         Activate Spotify Account
       </Text>
       <Container
