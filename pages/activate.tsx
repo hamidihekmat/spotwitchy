@@ -11,31 +11,7 @@ import {
 import { useInput } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-
-type SubmitCredentialsResponse = {
-  redirect_url: string;
-};
-
-async function submitCredentials({
-  clientId,
-  clientSecret,
-}: {
-  clientId: string;
-  clientSecret: string;
-}) {
-  const response = await fetch('/api/spotify/activate', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      clientId,
-      clientSecret,
-    }),
-  });
-
-  return (await response.json()) as SubmitCredentialsResponse;
-}
+import { submitCredentials } from '../api';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -69,6 +45,7 @@ const Home: NextPage = () => {
       setRedirectURL(redirect_url);
     }
   };
+
   return (
     <Container
       css={{ display: 'grid', placeItems: 'center', marginTop: '5rem' }}

@@ -11,9 +11,6 @@ import {
 const SPOTIFY_DEVELOPER_DASHBOARD =
   'https://developer.spotify.com/dashboard/login';
 
-const REDIRECT_URL =
-  'https://arc7-spotify.vercel.app/api/auth/callback/spotify';
-
 const Home: NextPage = () => {
   return (
     <Container
