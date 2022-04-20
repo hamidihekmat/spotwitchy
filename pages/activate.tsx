@@ -1,0 +1,118 @@
+import type { NextPage } from 'next';
+import {
+  Container,
+  Button,
+  Input,
+  Spacer,
+  Text,
+  Link,
+} from '@nextui-org/react';
+
+import { useInput } from '@nextui-org/react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+
+type SubmitCredentialsResponse = {
+  redirect_url: string;
+};
+
+async function submitCredentials({
+  clientId,
+  clientSecret,
+}: {
+  clientId: string;
+  clientSecret: string;
+}) {
+  const response = await fetch('/api/spotify/activate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      clientId,
+      clientSecret,
+    }),
+  });
+
+  return (await response.json()) as SubmitCredentialsResponse;
+}
+
+const Home: NextPage = () => {
+  const router = useRouter();
+  const [redirectURL, setRedirectURL] = useState('');
+  const {
+    value: clientId,
+    reset: resetClientId,
+    bindings: clientIdBindings,
+  } = useInput('');
+  const {
+    value: clientSecret,
+    reset: resetClientSecret,
+    bindings: clientSecretBindings,
+  } = useInput('');
+
+  useEffect(() => {
+    if (!redirectURL) return;
+    router.push(redirectURL);
+  }, [redirectURL, router]);
+
+  const handleSubmit = async () => {
+    if (!clientId || !clientSecret) {
+      return;
+    }
+    const { redirect_url } = await submitCredentials({
+      clientId,
+      clientSecret,
+    });
+
+    if (redirect_url) {
+      setRedirectURL(redirect_url);
+    }
+  };
+  return (
+    <Container
+      css={{ display: 'grid', placeItems: 'center', marginTop: '5rem' }}
+    >
+      <Text h2 css={{ textGradient: '45deg, $blue500 -20%, $pink500 50%' }}>
+        Activate Spotify Account
+      </Text>
+      <Container
+        css={{
+          maxW: '400px',
+          padding: '2rem 1rem',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Input
+          {...clientIdBindings}
+          onClearClick={resetClientId}
+          clearable
+          label="Client ID"
+          placeholder="Enter Client ID"
+          initialValue={clientId}
+        />
+
+        <Spacer y={1} />
+        <Input
+          {...clientSecretBindings}
+          onClearClick={resetClientSecret}
+          clearable
+          label="Client Secret"
+          placeholder="Enter Client Secret"
+          initialValue={clientSecret}
+        />
+        <Spacer y={1} />
+        <Button onClick={handleSubmit} shadow color="gradient" auto>
+          Activate
+        </Button>
+        <Spacer y={1} />
+        <Container css={{ padding: 0, margin: 0 }}>
+          <Link href="#">Need Help?</Link>
+        </Container>
+      </Container>
+    </Container>
+  );
+};
+
+export default Home;
