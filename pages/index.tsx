@@ -115,7 +115,7 @@ const Home: NextPage = () => {
                 {'http://localhost:3000/api/spotify/callback'}
                 <span>
                   <Tooltip
-                    css={{ paddingBottom: '5rem' }}
+                    css={{ transform: 'translate(-2rem, -6.5rem)' }}
                     content={copied ? 'Copied' : 'Copy'}
                     placement="top"
                   >
