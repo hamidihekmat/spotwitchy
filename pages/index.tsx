@@ -1,4 +1,10 @@
-import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
+import type {
+  GetServerSideProps,
+  GetStaticProps,
+  InferGetServerSidePropsType,
+  InferGetStaticPropsType,
+  NextPage,
+} from 'next';
 import NextLink from 'next/link';
 import {
   Container,
@@ -17,11 +23,14 @@ import useCopy from 'use-copy';
 
 import { SPOTIFY_DEVELOPER_DASHBOARD } from '../constant';
 
-type GetStaticResult = {
+type GetServerSideResult = {
   redirectUri: string;
 };
 
-export const getStaticSideProps: GetStaticProps<GetStaticResult> = async () => {
+export const getServerSideProps: GetServerSideProps<
+  GetServerSideResult
+> = async () => {
+  console.log(process.env.SPOTIFY_REDIRECT_URI);
   const redirectUri =
     process.env.SPOTIFY_REDIRECT_URI ||
     'http://localhost:3000/api/spotify/callback';
@@ -32,9 +41,9 @@ export const getStaticSideProps: GetStaticProps<GetStaticResult> = async () => {
   };
 };
 
-const Home: NextPage<InferGetStaticPropsType<typeof getStaticSideProps>> = ({
-  redirectUri,
-}) => {
+const Home: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ redirectUri }) => {
   const [copied, copy, setCopied] = useCopy(redirectUri);
 
   const copyText = () => {
