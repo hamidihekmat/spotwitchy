@@ -8,7 +8,6 @@ import { redis } from '../../../upstash';
 
 const handler: NextApiHandler = (req, res) => {
   if (req.method === 'POST') {
-    console.log(req.body);
     const { clientId, clientSecret } = req.body;
     const state = uuid();
 

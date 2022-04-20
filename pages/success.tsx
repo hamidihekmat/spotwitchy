@@ -61,8 +61,6 @@ type GetServerSideReturn = {
 export const getServerSideProps: GetServerSideProps<
   GetServerSideReturn
 > = async (context) => {
-  // ...
-  console.log(context.req.cookies);
   const { email } = context.req.cookies;
 
   if (!email) {
