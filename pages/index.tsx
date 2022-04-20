@@ -79,9 +79,9 @@ const Home: NextPage<
             color: 'Gainsboro',
           }}
         >
-          Slick and customizable spotify widget for OBS
+          Slick and customizable Spotify Widget for streamers.
         </Text>
-        <Spacer y={1} />
+        <Spacer y={2.5} />
         <Image
           css={{
             transform: 'scale(1.1)',
@@ -95,7 +95,7 @@ const Home: NextPage<
           alt="Sexy Widget"
           objectFit="cover"
         />
-        <Spacer y={2} />
+        <Spacer y={2.5} />
         <Text h3>One Time Activation</Text>
         <Spacer y={0.5} />
         <Text h4 css={{ color: 'Gainsboro' }}>
