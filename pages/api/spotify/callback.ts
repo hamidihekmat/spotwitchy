@@ -1,6 +1,7 @@
 import { NextApiHandler } from 'next';
 import nookies from 'nookies';
 import {
+  EMAIL_COOKIE_NAME,
   SPOTIFY_API_TOKEN_URL,
   SPOTIFY_PROFILE_URL,
   TOKEN_COOKIE_NAME,
@@ -59,7 +60,12 @@ const handler: NextApiHandler = async (req, res) => {
           path: '/',
         });
 
-        res.redirect('/');
+        nookies.set({ res }, EMAIL_COOKIE_NAME, email, {
+          httpOnly: true,
+          path: '/',
+        });
+
+        res.redirect('/success');
       } else {
         res.status(403);
       }

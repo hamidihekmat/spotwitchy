@@ -19,7 +19,8 @@ import { SPOTIFY_DEVELOPER_DASHBOARD } from '../constant';
 
 const Home: NextPage = () => {
   const [copied, copy, setCopied] = useCopy(
-    'http://localhost:3000/api/spotify/callback'
+    process.env.SPOTIFY_REDIRECT_URI ??
+      'http://localhost:3000/api/spotify/callback'
   );
 
   const copyText = () => {
@@ -112,7 +113,8 @@ const Home: NextPage = () => {
                 css={{ display: 'flex', justifyContent: 'space-between' }}
                 blockquote
               >
-                {'http://localhost:3000/api/spotify/callback'}
+                {process.env.SPOTIFY_REDIRECT_URI ??
+                  'http://localhost:3000/api/spotify/callback'}
                 <span>
                   <Tooltip
                     css={{ transform: 'translate(-2rem, -6.5rem)' }}
