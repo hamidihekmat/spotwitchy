@@ -27,3 +27,6 @@ export const SPOTIFY_PROFILE_URL = 'https://api.spotify.com/v1/me';
 export const SPOTIFY_API_TOKEN_URL = 'https://accounts.spotify.com/api/token';
 
 export const TOKEN_COOKIE_NAME = 'next-spotify-app-refresh-token';
+
+export const SPOTIFY_DEVELOPER_DASHBOARD =
+  'https://developer.spotify.com/dashboard/login';

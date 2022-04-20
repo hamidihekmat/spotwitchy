@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import NextLink from 'next/link';
 import {
   Container,
   Button,
@@ -7,6 +8,8 @@ import {
   Text,
   Link,
 } from '@nextui-org/react';
+
+import { ArrowLeftIcon } from '@radix-ui/react-icons';
 
 import { useInput } from '@nextui-org/react';
 import { useRouter } from 'next/router';
@@ -48,8 +51,23 @@ const Home: NextPage = () => {
 
   return (
     <Container
-      css={{ display: 'grid', placeItems: 'center', marginTop: '5rem' }}
+      css={{
+        display: 'grid',
+        placeItems: 'center',
+        marginTop: '4rem',
+        maxWidth: '800px',
+      }}
     >
+      <NextLink href={{ pathname: '/' }} passHref>
+        <Link
+          css={{
+            placeSelf: 'flex-start',
+            marginLeft: '5rem',
+          }}
+        >
+          <ArrowLeftIcon />
+        </Link>
+      </NextLink>
       <Text
         h2
         css={{
