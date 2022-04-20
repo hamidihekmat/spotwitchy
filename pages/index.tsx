@@ -87,9 +87,7 @@ const Home: NextPage<
             transform: 'scale(1.1)',
             userSelect: 'none',
           }}
-          autoResize
           showSkeleton
-          loading="lazy"
           maxDelay={1000}
           src="demo.png"
           alt="Sexy Widget"
