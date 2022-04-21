@@ -7,7 +7,7 @@ export const useSpotifyConfig = () => {
     {
       styles: folder({
         gradientColor: {
-          value: '#000200',
+          value: '#4d3647',
           hint: 'Change Gradient Color',
           label: 'Gradient Color',
         },
