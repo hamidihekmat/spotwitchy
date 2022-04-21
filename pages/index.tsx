@@ -155,10 +155,7 @@ const Home: NextPage<
       <Spacer y={2.5} />
       <Container>
         <Collapse.Group bordered>
-          <Collapse
-            title="Step 1"
-            subtitle="Your journey begins here, click me! 😄"
-          >
+          <Collapse title="Step 1">
             <Text blockquote>
               Visit Spotify developer dashboard and login to your account.
             </Text>
@@ -180,10 +177,7 @@ const Home: NextPage<
               </Link>
             </NextLink>
           </Collapse>
-          <Collapse
-            title="Step 2"
-            subtitle="Good things comes to those who wait... ⏱"
-          >
+          <Collapse title="Step 2">
             <Text blockquote>
               That was easy right? Now click on {'"Create An App"'} button and
               name your app whatever you want.
@@ -236,10 +230,7 @@ const Home: NextPage<
             <Spacer y={1} />
             <Text blockquote>Save and you are almost done!</Text>
           </Collapse>
-          <Collapse
-            title="Step 3"
-            subtitle="Congratulations, you made it here! 🎉"
-          >
+          <Collapse title="Step 3">
             <Text blockquote>
               Keep a note of your {`'Client ID'`} and {`'Client Secret'`}, you
               need it to activate your account. Click {`'Show Client Secret'`}{' '}
