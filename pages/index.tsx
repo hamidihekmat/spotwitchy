@@ -25,6 +25,7 @@ import { SPOTIFY_DEVELOPER_DASHBOARD } from '../constant';
 import { SpotifyWidget } from '../components/spotify';
 import { Leva } from 'leva';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 const SHOW_TIMEOUT = 1500;
 
@@ -35,10 +36,8 @@ type GetStaticSideResult = {
 export const getStaticSideProps: GetStaticProps<
   GetStaticSideResult
 > = async () => {
-  console.log(process.env.SPOTIFY_REDIRECT_URI);
   const redirectUri =
-    process.env.SPOTIFY_REDIRECT_URI ||
-    'http://localhost:3000/api/spotify/callback';
+    process.env.VERCEL_URL || 'http://localhost:3000/api/spotify/callback';
   return {
     props: {
       redirectUri,
