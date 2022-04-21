@@ -1,6 +1,8 @@
 import type {
   GetServerSideProps,
+  GetStaticProps,
   InferGetServerSidePropsType,
+  InferGetStaticPropsType,
   NextPage,
 } from 'next';
 import NextLink from 'next/link';
@@ -26,12 +28,12 @@ import { useEffect, useState } from 'react';
 
 const SHOW_TIMEOUT = 1500;
 
-type GetServerSideResult = {
+type GetStaticSideResult = {
   redirectUri: string;
 };
 
-export const getServerSideProps: GetServerSideProps<
-  GetServerSideResult
+export const getStaticSideProps: GetStaticProps<
+  GetStaticSideResult
 > = async () => {
   console.log(process.env.SPOTIFY_REDIRECT_URI);
   const redirectUri =
@@ -44,9 +46,9 @@ export const getServerSideProps: GetServerSideProps<
   };
 };
 
-const Home: NextPage<
-  InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ redirectUri }) => {
+const Home: NextPage<InferGetStaticPropsType<typeof getStaticSideProps>> = ({
+  redirectUri,
+}) => {
   const [copied, copy, setCopied] = useCopy(redirectUri);
   const [levaRef, setRef] = useState<HTMLSpanElement | null>(null);
   const copyText = () => {
