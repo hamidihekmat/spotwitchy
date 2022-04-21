@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 
 const SuccessPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ email }) => {
+> = ({ spotifyId }) => {
   useEffect(() => {
     confetti({
       zIndex: 999,
@@ -48,28 +48,28 @@ const SuccessPage: NextPage<
         </Text>
 
         <Spacer y={2} />
-        <Text h3>{email}</Text>
+        <Text h3>{spotifyId}</Text>
       </Container>
     </Container>
   );
 };
 
 type GetServerSideReturn = {
-  email: string;
+  spotifyId: string;
 };
 
 export const getServerSideProps: GetServerSideProps<
   GetServerSideReturn
 > = async (context) => {
-  const { email } = context.req.cookies;
+  const { spotifyId } = context.req.cookies;
 
-  if (!email) {
+  if (!spotifyId) {
     // redirect to error page
   }
 
   return {
     props: {
-      email,
+      spotifyId,
     },
   };
 };

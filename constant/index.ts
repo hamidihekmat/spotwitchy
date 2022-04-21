@@ -31,4 +31,4 @@ export const TOKEN_COOKIE_NAME = 'next-spotify-app-refresh-token';
 export const SPOTIFY_DEVELOPER_DASHBOARD =
   'https://developer.spotify.com/dashboard/login';
 
-export const EMAIL_COOKIE_NAME = 'email';
+export const SPOTIFY_ID_COOKIE_NAME = 'spotifyId';

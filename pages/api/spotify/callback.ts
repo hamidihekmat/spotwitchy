@@ -1,8 +1,8 @@
 import { NextApiHandler } from 'next';
 import nookies from 'nookies';
 import {
-  EMAIL_COOKIE_NAME,
   SPOTIFY_API_TOKEN_URL,
+  SPOTIFY_ID_COOKIE_NAME,
   SPOTIFY_PROFILE_URL,
   TOKEN_COOKIE_NAME,
 } from '../../../constant';
@@ -50,9 +50,9 @@ const handler: NextApiHandler = async (req, res) => {
           },
         });
 
-        const { email } = await profile.json();
+        const { id } = await profile.json();
 
-        await redis.set(email, {
+        await redis.set(id, {
           response,
           cient_id: credentials.clientId,
           client_secret: credentials.clientSecret,
@@ -64,7 +64,7 @@ const handler: NextApiHandler = async (req, res) => {
           path: '/',
         });
 
-        nookies.set({ res }, EMAIL_COOKIE_NAME, email, {
+        nookies.set({ res }, SPOTIFY_ID_COOKIE_NAME, id, {
           httpOnly: true,
           path: '/',
         });
