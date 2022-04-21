@@ -37,7 +37,8 @@ export const getStaticSideProps: GetStaticProps<
 > = async () => {
   return {
     props: {
-      redirectUri: process.env.VERCEL_URL,
+      redirectUri:
+        process.env.VERCEL_URL || 'http://localhost:3000/api/spotify/callback',
     },
   };
 };
