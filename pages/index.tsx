@@ -1,8 +1,6 @@
 import type {
   GetServerSideProps,
-  GetStaticProps,
   InferGetServerSidePropsType,
-  InferGetStaticPropsType,
   NextPage,
 } from 'next';
 import NextLink from 'next/link';
@@ -22,6 +20,11 @@ import { CopyIcon } from '@radix-ui/react-icons';
 import useCopy from 'use-copy';
 
 import { SPOTIFY_DEVELOPER_DASHBOARD } from '../constant';
+import { SpotifyWidget } from '../components/spotify';
+import { Leva } from 'leva';
+import { useEffect, useState } from 'react';
+
+const SHOW_TIMEOUT = 1500;
 
 type GetServerSideResult = {
   redirectUri: string;
@@ -45,7 +48,7 @@ const Home: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ redirectUri }) => {
   const [copied, copy, setCopied] = useCopy(redirectUri);
-
+  const [levaRef, setRef] = useState<HTMLSpanElement | null>(null);
   const copyText = () => {
     copy();
 
@@ -53,14 +56,25 @@ const Home: NextPage<
       setCopied(false);
     }, 3000);
   };
+
+  useEffect(() => {
+    if (!levaRef) return;
+
+    const timeOut = setTimeout(() => {
+      levaRef.querySelector('i')?.click();
+    }, SHOW_TIMEOUT);
+
+    return () => clearTimeout(timeOut);
+  }, [levaRef]);
+
   return (
     <Container
       css={{
         display: 'grid',
         placeItems: 'center',
-        marginTop: '5rem',
+        marginTop: '3rem',
         marginBottom: '3rem',
-        maxWidth: '800px',
+        maxWidth: '900px',
       }}
     >
       <Container>
@@ -70,29 +84,66 @@ const Home: NextPage<
             textGradient: '45deg, $blue500 -20%, $pink500 50%',
           }}
         >
-          Welcome To Spotwitchy!
+          Welcome to Spotwitchy
         </Text>
         <Spacer y={0.5} />
+
+        <Text
+          h4
+          css={{
+            color: 'Gainsboro',
+            textAlign: 'start',
+            letterSpacing: '$wider',
+          }}
+        >
+          Slick and customizable Spotify Widget
+        </Text>
+
         <Text
           h4
           css={{
             color: 'Gainsboro',
           }}
         >
-          Slick and customizable Spotify Widget for streamers.
+          Always online
         </Text>
-        <Spacer y={2.5} />
-        <Image
+        <Text
+          h4
           css={{
-            transform: 'scale(1.1)',
-            userSelect: 'none',
+            color: 'Gainsboro',
           }}
-          showSkeleton
-          maxDelay={1000}
-          src="demo.png"
-          alt="Sexy Widget"
-          objectFit="cover"
-        />
+        >
+          Real time customizability
+        </Text>
+        <Spacer y={2} />
+
+        <Text h3>Try it out</Text>
+        <Spacer y={1} />
+
+        <Container
+          css={{
+            position: 'relative',
+            alignSelf: 'flex-start',
+            padding: 0,
+            margin: 0,
+          }}
+          fluid
+        >
+          <SpotifyWidget css={{ padding: '0' }} />
+          <Container
+            css={{
+              position: 'absolute',
+
+              width: '300px',
+              top: 0,
+              right: '-2rem',
+            }}
+          >
+            <span ref={setRef}>
+              <Leva hideCopyButton fill titleBar oneLineLabels collapsed />
+            </span>
+          </Container>
+        </Container>
         <Spacer y={2.5} />
         <Text h3>One Time Activation</Text>
         <Spacer y={0.5} />
