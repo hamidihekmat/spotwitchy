@@ -1,10 +1,4 @@
-import type {
-  GetServerSideProps,
-  GetStaticProps,
-  InferGetServerSidePropsType,
-  InferGetStaticPropsType,
-  NextPage,
-} from 'next';
+import type { NextPage } from 'next';
 import NextLink from 'next/link';
 import {
   Container,
@@ -28,24 +22,9 @@ import { useEffect, useState } from 'react';
 
 const SHOW_TIMEOUT = 1500;
 
-type GetStaticSideResult = {
-  redirectUri: string;
-};
+const Home: NextPage = ({}) => {
+  const redirectUri = 'https://spotwitchy.vercel.app/api/spotify/callback';
 
-export const getStaticSideProps: GetStaticProps<
-  GetStaticSideResult
-> = async () => {
-  return {
-    props: {
-      redirectUri:
-        process.env.VERCEL_URL || 'http://localhost:3000/api/spotify/callback',
-    },
-  };
-};
-
-const Home: NextPage<InferGetStaticPropsType<typeof getStaticSideProps>> = ({
-  redirectUri,
-}) => {
   const [copied, copy, setCopied] = useCopy(redirectUri);
   const [levaRef, setRef] = useState<HTMLSpanElement | null>(null);
   const copyText = () => {
