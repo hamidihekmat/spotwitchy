@@ -54,7 +54,7 @@ const handler: NextApiHandler = async (req, res) => {
 
         await redis.set(id, {
           ...response,
-          cient_id: credentials.clientId,
+          client_id: credentials.clientId,
           client_secret: credentials.clientSecret,
         });
         await redis.del(stateFromCookie || stateFromQuery);
