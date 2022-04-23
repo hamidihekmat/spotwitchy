@@ -53,7 +53,7 @@ const handler: NextApiHandler = async (req, res) => {
         const { id } = await profile.json();
 
         await redis.set(id, {
-          response,
+          ...response,
           cient_id: credentials.clientId,
           client_secret: credentials.clientSecret,
         });
