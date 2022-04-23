@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { NextUIProvider } from '@nextui-org/react';
 
 import { createTheme } from '@nextui-org/react';
+import { AuthProvider } from '../context/auth';
 
 const darkTheme = createTheme({
   type: 'dark',
@@ -18,7 +19,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="Blazingly fast and slick Spotify Widget for streamers - Twitch and Youtube. Showcase your current playing song in your stream."
         />
       </Head>
-      <Component {...pageProps} />
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
     </NextUIProvider>
   );
 }

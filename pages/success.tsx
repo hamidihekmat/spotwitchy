@@ -7,10 +7,13 @@ import {
 import { Container, Text, Spacer } from '@nextui-org/react';
 import confetti from 'canvas-confetti';
 import { useEffect } from 'react';
+import { useAuth } from '../context/auth';
 
 const SuccessPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ spotifyId }) => {
+  const [_, actions] = useAuth();
+
   useEffect(() => {
     confetti({
       zIndex: 999,
@@ -18,7 +21,8 @@ const SuccessPage: NextPage<
       spread: 40,
       origin: { x: 0.5, y: 0.5 },
     });
-  }, []);
+    actions.setCurrentSpotifyId(spotifyId);
+  }, [actions, spotifyId]);
   return (
     <Container
       css={{

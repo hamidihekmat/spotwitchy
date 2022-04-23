@@ -35,7 +35,7 @@ const useDuration = () => {
   return duration;
 };
 
-export const SpotifyWidget = ({ css }: { css?: CSS }) => {
+export const DemoSpotifyWidget = ({ css }: { css?: CSS }) => {
   const [song] = spotifySongs;
   const percent = useDuration();
   const {

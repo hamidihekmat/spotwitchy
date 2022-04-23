@@ -16,11 +16,12 @@ import { CopyIcon } from '@radix-ui/react-icons';
 import useCopy from 'use-copy';
 
 import { SPOTIFY_DEVELOPER_DASHBOARD } from '../constant';
-import { SpotifyWidget } from '../components/spotify';
+import { DemoSpotifyWidget } from '../components/spotify';
 import { Leva } from 'leva';
 import { useEffect, useState } from 'react';
 
 const SHOW_TIMEOUT = 1500;
+const COPY_TIMEOUT = 3000;
 
 const Home: NextPage = ({}) => {
   const redirectUri = 'https://spotwitchy.vercel.app/api/spotify/callback';
@@ -32,7 +33,7 @@ const Home: NextPage = ({}) => {
 
     setTimeout(() => {
       setCopied(false);
-    }, 3000);
+    }, COPY_TIMEOUT);
   };
 
   useEffect(() => {
@@ -107,7 +108,7 @@ const Home: NextPage = ({}) => {
           }}
           fluid
         >
-          <SpotifyWidget css={{ padding: '0' }} />
+          <DemoSpotifyWidget css={{ padding: '0' }} />
           <Container
             css={{
               position: 'absolute',
