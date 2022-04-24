@@ -76,11 +76,12 @@ const Home: NextPage = ({}) => {
       <Modal
         {...bindings}
         closeButton
-        aria-labelledby="modal-title"
+        aria-labelledby="Activated Modal"
         blur
         open={visible}
         animated
         onClose={closeHandler}
+        css={{ mw: '330px' }}
       >
         <Modal.Header>
           <Text h5>Your account is already activated!</Text>
@@ -93,15 +94,18 @@ const Home: NextPage = ({}) => {
             page.
           </Text>
         </Modal.Body>
+        <Divider />
         <Modal.Footer>
-          <Button auto size="sm" color="error" bordered onClick={closeHandler}>
-            Cancel
-          </Button>
-          <NextLink href={{ pathname: '/customize' }} passHref>
-            <Button auto size="sm" color="gradient" bordered>
-              Customize Page
+          <Row justify="flex-end">
+            <Button size="sm" light onClick={closeHandler}>
+              Cancel
             </Button>
-          </NextLink>
+            <NextLink href="customize" passHref>
+              <Button size="sm" color="gradient" bordered>
+                Customize
+              </Button>
+            </NextLink>
+          </Row>
         </Modal.Footer>
       </Modal>
       <Container>
