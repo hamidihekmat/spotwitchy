@@ -1,14 +1,16 @@
 export interface FreshToken {
   client_id: string;
   client_secret: string;
-  provider: string;
-  type: string;
-  providerAccountId: string;
-  access_token: string;
-  token_type: string;
-  expires_at: number;
-  refresh_token: string;
-  scope: string;
+  response: {
+    provider: string;
+    type: string;
+    providerAccountId: string;
+    access_token: string;
+    token_type: string;
+    expires_at: number;
+    refresh_token: string;
+    scope: string;
+  };
 }
 export interface RefreshToken {
   freshToken: FreshToken;

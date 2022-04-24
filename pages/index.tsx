@@ -16,7 +16,7 @@ import { CopyIcon } from '@radix-ui/react-icons';
 import useCopy from 'use-copy';
 
 import { SPOTIFY_DEVELOPER_DASHBOARD } from '../constant';
-import { DemoSpotifyWidget } from '../components/spotify';
+import { DemoSpotifyWidget } from '../components/spotify-demo';
 import { Leva } from 'leva';
 import { useEffect, useState } from 'react';
 

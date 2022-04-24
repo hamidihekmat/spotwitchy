@@ -1,11 +1,43 @@
 import { CSS, styled } from '@stitches/react';
-import { useNowPlaying } from './spotify';
 import { useSpotifyConfig } from './config';
-import { Container, Text } from '@nextui-org/react';
 
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
-export const SpotifyWidget = ({ css, config }: { css?: CSS, config: ReturnType<typeof useSpotifyConfig> }) => {
+const spotifySongs = [
+  {
+    id: 'levaWithU',
+    cover: '/cover_art.jpeg',
+    songName: 'Lies',
+    artist: 'KLOUD',
+    status: 'Now Playing',
+    percent: 7,
+  },
+];
+
+const TICK = 1500;
+
+const useDuration = () => {
+  const [duration, setDuration] = useState(1);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (duration === 100) {
+        setDuration(0);
+      } else {
+        setDuration((prev) => prev + 1);
+      }
+    }, TICK);
+
+    return () => clearInterval(intervalId);
+  }, [duration]);
+
+  return duration;
+};
+
+export const DemoSpotifyWidget = ({ css }: { css?: CSS }) => {
+  const [song] = spotifySongs;
+  const percent = useDuration();
   const {
     gradientColor,
     songStatusColor,
@@ -13,41 +45,14 @@ export const SpotifyWidget = ({ css, config }: { css?: CSS, config: ReturnType<t
     artistColor,
     percentColor,
     showPercent,
-  } = config
-
-  const { nowPlaying } = useNowPlaying();
-
-  if (!nowPlaying) {
-    return (
-      <Container
-        css={{
-          width: 500,
-          height: 500,
-          display: 'grid',
-          placeItems: 'center',
-          padding: 0,
-          margin: 0,
-        }}
-      >
-        <Text>Play something on Spotify...</Text>
-      </Container>
-    );
-  }
-
-  const coverImage = nowPlaying.item.album.images[0].url;
-  const songTitle = nowPlaying.item.name;
-  const artists = nowPlaying.item.artists
-    .map((artist) => artist.name)
-    .join(', ');
-
-  const percent = Math.round(
-    (nowPlaying.progress_ms / nowPlaying.item.duration_ms) * 100
-  );
+  } = useSpotifyConfig();
 
   return (
     <Box
-      key={nowPlaying.item.id}
+      key={song.id}
       css={{
+        position: 'relative',
+        padding: '1rem',
         ...css,
       }}
     >
@@ -56,7 +61,7 @@ export const SpotifyWidget = ({ css, config }: { css?: CSS, config: ReturnType<t
         animate={{ scale: 1, filter: 'brightness(1)' }}
         transition={{ duration: 0.5 }}
         exit={{ filter: 'brightness(0.2)' }}
-        style={{ backgroundImage: `url(${coverImage})` }}
+        style={{ backgroundImage: `url(${song.cover})` }}
         css={{
           $$gradient: gradientColor,
         }}
@@ -81,7 +86,7 @@ export const SpotifyWidget = ({ css, config }: { css?: CSS, config: ReturnType<t
         exit={{ opacity: 0, scale: 0 }}
         css={{ $$songStatusColor: songStatusColor }}
       >
-        {nowPlaying.is_playing ? 'Now Playing' : 'Paused'}
+        {song.status}
       </Status>
       <SongTitle
         initial={{ scale: 0.95, opacity: 0, translateY: 50 }}
@@ -90,9 +95,9 @@ export const SpotifyWidget = ({ css, config }: { css?: CSS, config: ReturnType<t
         exit={{ opacity: 0, scale: 0 }}
         css={{ $$songTitleColor: songTitleColor }}
       >
-        {songTitle.length > 16
-          ? `${songTitle.substring(0, 16).trimEnd()}...`
-          : songTitle}
+        {song.songName.length > 16
+          ? `${song.songName.substring(0, 16).trimEnd()}...`
+          : song.songName}
       </SongTitle>
       <Artist
         initial={{ scale: 0.95, opacity: 0, translateY: 50 }}
@@ -101,17 +106,15 @@ export const SpotifyWidget = ({ css, config }: { css?: CSS, config: ReturnType<t
         exit={{ opacity: 0, scale: 0 }}
         css={{ $$artistColor: artistColor }}
       >
-        {artists.length > 18
-          ? `${artists.substring(0, 18).trimEnd()}...`
-          : artists}
+        {song.artist.length > 18
+          ? `${song.artist.substring(0, 18).trimEnd()}...`
+          : song.artist}
       </Artist>
     </Box>
   );
 };
 
-const Box = styled('div', {
-  overflow: 'hidden',
-});
+const Box = styled('div', {});
 
 const CoverImage = styled(motion.div, {
   position: 'relative',
