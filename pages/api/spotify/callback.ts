@@ -69,7 +69,7 @@ const handler: NextApiHandler = async (req, res) => {
           path: '/',
         });
 
-        res.redirect('/success');
+        res.redirect('/customize');
       } else {
         res.status(403);
       }

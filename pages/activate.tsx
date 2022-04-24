@@ -17,19 +17,6 @@ import { useEffect, useState } from 'react';
 import { submitCredentials } from '../api';
 import toast from 'react-hot-toast';
 
-const REDIRECT_TIMEOUT = 2500;
-
-const notifySuccess = () =>
-  toast('Successfully Activated Account', {
-    icon: <CheckIcon />,
-    style: {
-      borderRadius: '10px',
-      background: '#333',
-      color: '#fff',
-    },
-    position: 'bottom-center',
-  });
-
 const Home: NextPage = () => {
   const router = useRouter();
   const [redirectURL, setRedirectURL] = useState('');
@@ -47,7 +34,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (!redirectURL) return;
 
-    setTimeout(() => router.push(redirectURL), REDIRECT_TIMEOUT);
+    router.push(redirectURL);
   }, [redirectURL, router]);
 
   const handleSubmit = async () => {
@@ -60,7 +47,6 @@ const Home: NextPage = () => {
     });
 
     if (redirect_url) {
-      notifySuccess();
       setRedirectURL(redirect_url);
     }
   };
