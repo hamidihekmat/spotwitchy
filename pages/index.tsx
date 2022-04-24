@@ -9,9 +9,17 @@ import {
   Link,
   Tooltip,
   Card,
+  Switch,
+  Modal,
+  Divider,
+  useTheme,
+  useModal,
+  Button,
+  Row,
 } from '@nextui-org/react';
+import { useTheme as useNextTheme } from 'next-themes';
 
-import { CopyIcon } from '@radix-ui/react-icons';
+import { CopyIcon, MoonIcon, SunIcon } from '@radix-ui/react-icons';
 
 import useCopy from 'use-copy';
 
@@ -19,14 +27,22 @@ import { SPOTIFY_DEVELOPER_DASHBOARD } from '../constant';
 import { DemoSpotifyWidget } from '../components/spotify-demo';
 import { Leva } from 'leva';
 import { useEffect, useState } from 'react';
+import { useAuth } from '../context/auth';
 
 const SHOW_TIMEOUT = 1500;
 const COPY_TIMEOUT = 3000;
+const REDIRECT_URI = 'https://spotwitchy.vercel.app/api/spotify/callback';
 
 const Home: NextPage = ({}) => {
-  const redirectUri = 'https://spotwitchy.vercel.app/api/spotify/callback';
+  const [auth] = useAuth();
+  const { setTheme } = useNextTheme();
+  const { isDark } = useTheme();
+  const { setVisible, visible, bindings } = useModal();
+  const closeHandler = () => {
+    setVisible(false);
+  };
 
-  const [copied, copy, setCopied] = useCopy(redirectUri);
+  const [copied, copy, setCopied] = useCopy(REDIRECT_URI);
   const [levaRef, setRef] = useState<HTMLSpanElement | null>(null);
   const copyText = () => {
     copy();
@@ -38,13 +54,14 @@ const Home: NextPage = ({}) => {
 
   useEffect(() => {
     if (!levaRef) return;
+    if (auth) setVisible(true);
 
     const timeOut = setTimeout(() => {
       levaRef.querySelector('i')?.click();
     }, SHOW_TIMEOUT);
 
     return () => clearTimeout(timeOut);
-  }, [levaRef]);
+  }, [levaRef, auth]); // eslint-disable-line
 
   return (
     <Container
@@ -56,21 +73,74 @@ const Home: NextPage = ({}) => {
         maxWidth: '900px',
       }}
     >
+      <Modal
+        {...bindings}
+        closeButton
+        aria-labelledby="modal-title"
+        blur
+        open={visible}
+        animated
+        onClose={closeHandler}
+      >
+        <Modal.Header>
+          <Text h5>Your account is already activated!</Text>
+        </Modal.Header>
+        <Divider />
+        <Modal.Body>
+          <Text>
+            It seems that you have already been through the activation process,
+            if you would like to customize your widget. You can go to customize
+            page.
+          </Text>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button auto size="sm" color="error" bordered onClick={closeHandler}>
+            Cancel
+          </Button>
+          <NextLink href={{ pathname: '/customize' }} passHref>
+            <Button auto size="sm" color="gradient" bordered>
+              Customize Page
+            </Button>
+          </NextLink>
+        </Modal.Footer>
+      </Modal>
       <Container>
-        <Text
-          h1
+        <Container
           css={{
-            textGradient: '45deg, $blue500 -20%, $pink500 50%',
+            margin: 0,
+            padding: 0,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
           }}
         >
-          Welcome to Spotwitchy
-        </Text>
+          <Text
+            h1
+            css={{
+              display: 'block',
+              textGradient: '45deg, $blue500 -20%, $pink500 50%',
+            }}
+          >
+            Welcome to Spotwitchy
+          </Text>
+
+          <Switch
+            css={{ display: 'block' }}
+            checked={isDark}
+            shadow
+            size="sm"
+            onChange={(e) => setTheme(e.target.checked ? 'dark' : 'light')}
+            iconOn={<MoonIcon />}
+            iconOff={<SunIcon />}
+          />
+        </Container>
+
         <Spacer y={0.5} />
 
         <Text
           h4
+          weight="normal"
           css={{
-            color: 'Gainsboro',
             textAlign: 'start',
             letterSpacing: '$wider',
           }}
@@ -78,20 +148,10 @@ const Home: NextPage = ({}) => {
           Slick and customizable Spotify Widget
         </Text>
 
-        <Text
-          h4
-          css={{
-            color: 'Gainsboro',
-          }}
-        >
+        <Text h4 weight="normal">
           Always online
         </Text>
-        <Text
-          h4
-          css={{
-            color: 'Gainsboro',
-          }}
-        >
+        <Text h4 weight="normal">
           Real time customizability
         </Text>
         <Spacer y={2} />
@@ -126,7 +186,7 @@ const Home: NextPage = ({}) => {
         <Spacer y={2.5} />
         <Text h3>One Time Activation</Text>
         <Spacer y={0.5} />
-        <Text h4 css={{ color: 'Gainsboro' }}>
+        <Text h4>
           In order to use the Spotify widget, you must first follow the
           instruction to activate your spotify account.
         </Text>
@@ -181,7 +241,7 @@ const Home: NextPage = ({}) => {
                 css={{ display: 'flex', justifyContent: 'space-between' }}
                 blockquote
               >
-                {redirectUri}
+                {REDIRECT_URI}
                 <span>
                   <Tooltip
                     css={{ transform: 'translate(-2rem, -6.5rem)' }}

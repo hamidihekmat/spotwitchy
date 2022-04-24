@@ -1,3 +1,4 @@
+import { parseCookies } from 'nookies';
 import React, {
   createContext,
   useCallback,
@@ -27,20 +28,16 @@ type AuthProviderProps = {
   children: React.ReactElement | React.ReactElement[];
 };
 
-const SPOTIFY_ID_LC = 'spotifyId';
+const SPOTIFY_ID_C = 'spotifyId';
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [value, setValue] = useState<string | null>(null);
-
+  const cookies = parseCookies();
   useEffect(() => {
-    if (value) localStorage.setItem(SPOTIFY_ID_LC, value);
-  }, [value]);
-
-  useEffect(() => {
-    const storedSpotifyId = localStorage.getItem(SPOTIFY_ID_LC);
-    if (storedSpotifyId) setValue(storedSpotifyId);
-  }, []);
-
+    if (cookies[SPOTIFY_ID_C]) {
+      setValue(cookies[SPOTIFY_ID_C]);
+    }
+  }, [cookies]);
   const actions = {
     setCurrentSpotifyId: useCallback((id: string) => setValue(id), []),
   };

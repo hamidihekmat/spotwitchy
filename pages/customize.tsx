@@ -73,7 +73,6 @@ const CustomizePage: NextPage<
         <Text
           h4
           css={{
-            color: 'Gainsboro',
             textAlign: 'start',
             letterSpacing: '$wider',
           }}
@@ -83,7 +82,6 @@ const CustomizePage: NextPage<
         <Text
           h4
           css={{
-            color: 'Gainsboro',
             textAlign: 'start',
             letterSpacing: '$wider',
           }}

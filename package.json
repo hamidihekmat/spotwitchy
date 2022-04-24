@@ -22,6 +22,7 @@
     "isomorphic-fetch": "^3.0.0",
     "leva": "^0.9.23",
     "next": "12.1.5",
+    "next-themes": "^0.1.1",
     "nookies": "^2.5.2",
     "querystring": "^0.2.1",
     "react": "18.0.0",

@@ -65,8 +65,8 @@ const handler: NextApiHandler = async (req, res) => {
         });
 
         nookies.set({ res }, SPOTIFY_ID_COOKIE_NAME, id, {
-          httpOnly: true,
           path: '/',
+          maxAge: 2147483647,
         });
 
         res.redirect('/customize');
