@@ -1,5 +1,8 @@
-import { NextPage } from 'next';
-import { useAuth } from '../context/auth';
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from 'next';
 
 import { Button, Container, Spacer, Text } from '@nextui-org/react';
 import { SpotifyWidget } from '../components/spotify';
@@ -19,12 +22,26 @@ const notifyCopy = () =>
     position: 'bottom-center',
   });
 
-const CustomizePage: NextPage = () => {
-  const [auth] = useAuth();
+type GetServerSideResult = {
+  spotifyId: string;
+};
+
+export const getServerSideProps: GetServerSideProps<
+  GetServerSideResult
+> = async ({ req }) => {
+  const spotifyId = req.cookies['spotifyId'];
+  return {
+    props: {
+      spotifyId,
+    },
+  };
+};
+
+const CustomizePage: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ spotifyId }) => {
   const config = useSpotifyConfig();
-  if (!auth) {
-    // do something
-  }
+
   return (
     <Container
       css={{
@@ -101,7 +118,7 @@ const CustomizePage: NextPage = () => {
             songTitleColor: config.songTitleColor,
             artistColor: config.artistColor,
             showPercent: String(config.showPercent),
-            spotifyId: auth!,
+            spotifyId,
           });
           navigator.clipboard.writeText(
             `${window.location.hostname}/preview/?${searchParams.toString()}`

@@ -9,13 +9,12 @@ import {
   Link,
 } from '@nextui-org/react';
 
-import { ArrowLeftIcon, CheckIcon } from '@radix-ui/react-icons';
+import { ArrowLeftIcon } from '@radix-ui/react-icons';
 
 import { useInput } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { submitCredentials } from '../api';
-import toast from 'react-hot-toast';
 
 const Home: NextPage = () => {
   const router = useRouter();
