@@ -10,6 +10,8 @@ import { Leva } from 'leva';
 import toast from 'react-hot-toast';
 import { ClipboardCopyIcon } from '@radix-ui/react-icons';
 import { useSpotifyConfig } from '../components/spotify/config';
+import { useSpotifyId } from '../components/spotify/spotify';
+import { useEffect } from 'react';
 
 const notifyCopy = () =>
   toast('Copied OBS Link', {
@@ -40,6 +42,11 @@ export const getServerSideProps: GetServerSideProps<
 const CustomizePage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ spotifyId }) => {
+  const { setSpotifyId } = useSpotifyId();
+  useEffect(() => {
+    setSpotifyId(spotifyId);
+  }, [setSpotifyId, spotifyId]);
+
   const config = useSpotifyConfig();
 
   return (
