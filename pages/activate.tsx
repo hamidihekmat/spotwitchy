@@ -9,12 +9,26 @@ import {
   Link,
 } from '@nextui-org/react';
 
-import { ArrowLeftIcon } from '@radix-ui/react-icons';
+import { ArrowLeftIcon, CheckIcon } from '@radix-ui/react-icons';
 
 import { useInput } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { submitCredentials } from '../api';
+import toast from 'react-hot-toast';
+
+const REDIRECT_TIMEOUT = 2500;
+
+const notifySuccess = () =>
+  toast('Successfully Activated Account', {
+    icon: <CheckIcon />,
+    style: {
+      borderRadius: '10px',
+      background: '#333',
+      color: '#fff',
+    },
+    position: 'bottom-center',
+  });
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -32,7 +46,8 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (!redirectURL) return;
-    router.push(redirectURL);
+
+    setTimeout(() => router.push(redirectURL), REDIRECT_TIMEOUT);
   }, [redirectURL, router]);
 
   const handleSubmit = async () => {
@@ -45,6 +60,7 @@ const Home: NextPage = () => {
     });
 
     if (redirect_url) {
+      notifySuccess();
       setRedirectURL(redirect_url);
     }
   };
