@@ -280,7 +280,7 @@ const Home: NextPage = ({}) => {
               to reveal client secret...
             </Text>
             <Spacer y={1} />
-            <NextLink href="/customize" passHref>
+            <NextLink href="/activate" passHref>
               <Link icon css={{ gap: '0.5rem' }}>
                 <Text
                   weight="bold"
