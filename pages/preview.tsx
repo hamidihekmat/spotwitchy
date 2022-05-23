@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import { useEffect } from 'react';
 import { SpotifyWidget } from '../components/spotify';
 import { useSpotifyConfig } from '../components/spotify/config';
+import ErrorBoundry from '../components/ErrorBoundary';
 
 const useSetTransparent = () => {
   useEffect(() => {
@@ -18,10 +19,10 @@ const PreviewPage: NextPage = () => {
   useSetTransparent();
   const config = useSpotifyConfig();
   return (
-    <>
+    <ErrorBoundry>
       <Leva hidden />
       <SpotifyWidget config={config} />
-    </>
+    </ErrorBoundry>
   );
 };
 export default PreviewPage;
